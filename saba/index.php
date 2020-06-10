@@ -20,6 +20,8 @@
 </form>
 
 <?php
+//  コミットした内容を更新
+//  git pull origin master
 
 function WRITE_data()
 {
