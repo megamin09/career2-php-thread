@@ -7,4 +7,4 @@ $fp = fopen($txt_box_file, 'w');
 fwrite($fp, "　");
 fclose($fp);
 
-require_once '../index.php.php';
+require '../index.php.php';
