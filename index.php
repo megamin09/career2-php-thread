@@ -1,75 +1,106 @@
 <html>
 <head><title>掲示板</title></head>
-<body>
 
-<h1>掲示板App</h1>
+<h1>掲示板App<h1>
 
 <h2>投稿フォーム</h2>
 
-<form method="POST" action="<?php print($_SERVER['PHP_SELF']) ?>">
-    <input type="text" name="personal_name" placeholder="名前" required><br><br>
-    <textarea name="contents" rows="8" cols="40" placeholder="内容" required>
-</textarea><br><br>
-    <input type="submit" name="btn" value="投稿する">
+<form action="index.php" method="POST">
+    <input type="text" name="name" placeholder = "名前" required >
+    <br><br>
+    <textarea name="box" rows="8" cols="40" placeholder = "内容" required ></textarea>
+    <br><br>
+    <input type="submit"　name="btn1" value="投稿する" >
 </form>
 
 <h2>スレッド</h2>
 
+<form method="POST" action="saba/delete.php">
+    <button type="submit">投稿を全削除する</button>
+</form>
+
 <?php
 
-const THREAD_FILE = 'thread.txt';
+function WRITE_data()
+{
+    $txt_box_file = 'txt_box.txt';
+    $name_box = $_POST["name"];
+    $txt_box = $_POST["box"];
 
-function readData() {
-    // ファイルが存在しなければデフォルト空文字のファイルを作成する
-    if (! file_exists(THREAD_FILE)) {
-        $fp = fopen(THREAD_FILE, 'w');
-        fwrite($fp, '');
+    //echo '投稿者:'.$name_box.'<br>';
+    //echo 'コメント<br>'.$txt_box;
+
+    //ファイルが存在しない場合作成する
+    if(! file_exists($txt_box_file) )
+    {
+        $fp = fopen($txt_box_file, 'w');
         fclose($fp);
     }
+    //読み込みと書き込みができる状態でファイルを開く
+    $fp = fopen( $txt_box_file, 'ab' );
+    fwrite( $fp, date( "Y/m/d H:i:s" ).", " );
+    fwrite( $fp, $name_box.", " );
+    //$txt_box = nl2br($txt_box);
+    $txt_box = str_replace( "\r\n", "< br >", $txt_box );
+    $txt_box = str_replace( "\n", "< br >", $txt_box );
+    $txt_box = str_replace( "\r", "< br >", $txt_box );
+    fwrite( $fp, $txt_box."\n" );
+    // fputcsv( $fp, $txt_box );
 
-    $thread_text = file_get_contents(THREAD_FILE);
-    echo $thread_text;
-}
-
-function writeData() {
-    $personal_name = $_POST['personal_name'];
-    $contents = $_POST['contents'];
-    $contents = nl2br($contents);
-
-    $data = "<hr>\n";
-    $data = $data."<p>投稿者:".$personal_name."</p>\n";
-    $data = $data."<p>内容:</p>\n";
-    $data = $data."<p>".$contents."</p>\n";
-
-    $fp = fopen(THREAD_FILE, 'a');
-
-    if ($fp){
-        if (flock($fp, LOCK_EX)){
-            if (fwrite($fp,  $data) === FALSE){
-                print('ファイル書き込みに失敗しました');
-            }
-
-            flock($fp, LOCK_UN);
-        }else{
-            print('ファイルロックに失敗しました');
-        }
-    }
-
-    fclose($fp);
+    $_POST = array();
+    
+    // //二重投稿を防ぐため
+    // header('Location: ./');
 
     // ブラウザのリロード対策
     $redirect_url = $_SERVER['HTTP_REFERER'];
     header("Location: $redirect_url");
     exit;
+
+    fclose($fp);
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    writeData();
+//送信があったら実行
+if( $_SERVER["REQUEST_METHOD"] === "POST" && array_key_exists('name', $_POST) )
+{
+    WRITE_data();
 }
 
-readData();
+//ファイルの有無を確認
+if( file_exists("txt_box.txt") )
+{
+    $fp = fopen("txt_box.txt", 'r');
+
+    while($line = fgetcsv($fp))
+    {
+        // 読み込んだ結果を表示します。
+        if( $line[0]=== "　" )
+        {
+            //データがなかったため表示させない
+            break;
+        }
+
+        $id = 0;
+        $data = "<hr>";
+        $data = $data.'<p>投稿日時: '.$line[$id].'<br></p>';
+        $id++;
+        $data = $data.'<p>投稿者: '.$line[$id].'</p>';
+        $data = $data.'<p>内容</p>';
+        $id++;
+        $line[$id] = str_replace( "< br >", "\n", $line[$id] );
+        // $line[$id] = str_replace( "\n", "< br >", $line[$id] );
+        // $line[$id] = str_replace( "\r", "< br>", $line[$id] );
+        $line[$id] = nl2br($line[$id]);
+        $data = $data.'<p>'.$line[$id]."<br></p>";
+
+        echo $data;
+    }
+
+    fclose($fp);
+}
+
 
 ?>
 
-</body>
+
 </html>
