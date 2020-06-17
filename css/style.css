@@ -1,6 +1,9 @@
 body {
-    font-family:"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
-    color:#630;
-    line-height:25px;
-    font-size:0.95em;
-    }
+    background: linear-gradient(-45deg, rgba(246, 255, 0, .8), rgba(255, 0, 161, .8)) fixed, url(http://www.webcreatorbox.com/sample/images/bg-cherrybrossam.jpg) fixed;
+    background-size: cover;
+  }
+  
+  div {
+    margin: 120px 0;
+    text-align: center;
+  }
