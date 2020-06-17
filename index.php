@@ -8,11 +8,11 @@
 
 <link rel = "stylesheet" href = "css/style.css">
 
-<body style = "background: linear-gradient(-45deg, rgba(246, 255, 0, .8), rgba(255, 0, 161, .8)),
+<!-- <body style = "background: linear-gradient(-45deg, rgba(246, 255, 0, .8), rgba(255, 0, 161, .8)),
   url(images/bg-cherrybrossam.jpg);
   background-size: cover;">
 
-<head>
+<head> -->
 <style type="text/css">
 body,td,th {font-family:"ほのかアンティーク角","ＭＳ Ｐゴシック", "Osaka", "ヒラギノ角ゴ Pro W3";font-size:14px;}
 </style>
