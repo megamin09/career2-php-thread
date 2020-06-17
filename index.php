@@ -8,7 +8,7 @@
 
 <head>
 <style type="text/css">
-body,td,th {font-family:"ＭＳ Ｐゴシック", "Osaka", "ヒラギノ角ゴ Pro W3";font-size:14px;}
+body,td,th {font-family:"ほのかアンティーク角","ＭＳ Ｐゴシック", "Osaka", "ヒラギノ角ゴ Pro W3";font-size:14px;}
 </style>
 </head>
 
