@@ -13,6 +13,9 @@ body {
   .fuchidori {
     font-size: 200%;
     color: #000000;
-    -webkit-text-stroke: 0.05px #fff;
-    text-shadow: 0.05px #fff;
+    text-shadow:1px 1px 0 #FFF, -1px -1px 0 #FFF,
+    -1px 1px 0 #FFF, 1px -1px 0 #FFF,
+    0px 1px 0 #FFF,  0-1px 0 #FFF,
+    -1px 0 0 #FFF, 1px 0 0 #FFF;
+
   }
