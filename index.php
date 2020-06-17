@@ -6,7 +6,9 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">      
 
-<body style = "background: linear-gradient(#05FBFF, #1E00FF)">
+<body style = "background: linear-gradient(-45deg, rgba(246, 255, 0, .8), rgba(255, 0, 161, .8)),
+  url(images/bg-cherrybrossam.jpg);
+  background-size: cover;">
 
 <head>
 <style type="text/css">
