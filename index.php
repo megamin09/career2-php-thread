@@ -14,7 +14,7 @@
 
 <head> -->
 
-<body class = "funchidori">
+<body class = "fuchidori">
 
 <style type="text/css">
 body,td,th {font-family:"ほのかアンティーク角","ＭＳ Ｐゴシック", "Osaka", "ヒラギノ角ゴ Pro W3";font-size:14px;color: #fff;  text-stroke: 1px #000;
