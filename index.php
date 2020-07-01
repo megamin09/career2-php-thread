@@ -1,3 +1,38 @@
+<?php
+
+/**
+ * 職業実践2 - 掲示板アプリ
+ */
+
+session_start();
+new Thread();
+
+function setToken()
+{
+    $token = sha1(uniqid(mt_rand(), true));
+    $_SESSION['token'] = $token;
+}
+
+function checkToken()
+{
+    if (empty($_SESSION['token'])) {
+        echo "Sessionが空です";
+        exit;
+    }
+
+    if (($_SESSION['token']) !== $_POST['token']) {
+        echo "不正な投稿です。";
+        exit;
+    }
+
+    $_SESSION['token'] = null;
+}
+
+if (empty($_SESSION['token'])) {
+    setToken();
+}
+?>
+
 <html>
 
 <!-- Latest compiled and minified CSS -->
@@ -43,6 +78,12 @@ body,td,th {font-family:"ほのかアンティーク角","ＭＳ Ｐゴシック
 </form>
 
 <?php
+
+date_default_timezone_set('Asia/Tokyo');
+const THREAD_FILE = 'thread.txt';
+
+require_once './Thread.php';
+$thread = new Thread('掲示板App');
 
 function WRITE_data()
 {
@@ -122,8 +163,16 @@ if( file_exists("txt_box.txt") )
     fclose($fp);
 }
 
+echo $thread->getList();
 
 ?>
+
+</body>
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
 
 
 </html>
