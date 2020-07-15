@@ -62,41 +62,77 @@ body,td,th {font-family:"ほのかアンティーク角","ＭＳ Ｐゴシック
 <h1>掲示板App<h1>
 
 <h2>投稿フォーム</h2>
+        <form method="POST" action="<?php print($_SERVER['PHP_SELF']) ?>">
+            <input type="text" class="form-control" name="personal_name" placeholder="名前" required><br><br>
+            <textarea name="contents" class="form-control" rows="8" cols="40" placeholder="内容" required></textarea>
+            <br><br>
+            <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
+            <input class="btn btn-primary"  type="submit" name="btn" value="投稿する">
+        </form>
 
-<form action="index.php" method="POST">
+
+        <form method="POST" action="<?php print($_SERVER['PHP_SELF']) ?>">
+            <input type="hidden" name="method" value="DELETE">
+            <button class="btn btn-danger" type="submit">投稿を全削除する</button>
+        </form>
+
+<!-- <form action="index.php" method="POST">
     <input type="text" name="name" placeholder = "名前" required >
     <br><br>
     <textarea name="box" rows="8" cols="40" placeholder = "内容" required ></textarea>
     <br><br>
     <input type="submit"　name="btn1" value="投稿する" >
-</form>
+</form> -->
 
 <h2>スレッド</h2>
 
-<form method="POST" action = "<?php print($_SERVER['PHP_SELF']) ?>">
+<!-- <form method="POST" action = "<?php print($_SERVER['PHP_SELF']) ?>">
 <input type="hidden" name="method" value="DELETE">
             <button type="submit">投稿を全削除する</button>
-</form>
+</form> -->
 
 
 <?php
 
-date_default_timezone_set('Asia/Tokyo');
+// date_default_timezone_set('Asia/Tokyo');
+// const THREAD_FILE = 'thread.txt';
+
+// require_once './Thread.php';
+// $thread = new Thread('掲示板App');
+
+//送信があったら実行
+// if( $_SERVER["REQUEST_METHOD"] === "POST" )
+// {
+//     if (isset($_POST["method"]) && $_POST["method"] === "DELETE") 
+//     {
+//         $thread->delete();
+//     }
+//     else if(  array_key_exists('name', $_POST) )
+//     {
+//         $thread->post( $_POST["name"], $_POST["box"] );
+//     }
+
+//     // ブラウザのリロード対策
+//     $redirect_url = $_SERVER['HTTP_REFERER'];
+//     header("Location: $redirect_url");
+//     exit;
+// }
+
+
+
+// $thread->getList();
+
+
 const THREAD_FILE = 'thread.txt';
 
 require_once './Thread.php';
 $thread = new Thread('掲示板App');
 
-//送信があったら実行
-if( $_SERVER["REQUEST_METHOD"] === "POST" )
-{
-    if (isset($_POST["method"]) && $_POST["method"] === "DELETE") 
-    {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST["method"]) && $_POST["method"] === "DELETE") {
         $thread->delete();
-    }
-    else if(  array_key_exists('name', $_POST) )
-    {
-        $thread->post( $_POST["name"], $_POST["box"] );
+    } else {
+        $thread->post($_POST['personal_name'], $_POST['contents']);
     }
 
     // ブラウザのリロード対策
@@ -105,9 +141,7 @@ if( $_SERVER["REQUEST_METHOD"] === "POST" )
     exit;
 }
 
-
-
-$thread->getList();
+echo $thread->getList();
 
 ?>
 
